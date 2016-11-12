@@ -40,3 +40,9 @@ class Answer(object):
 		with open(fp, 'r', encoding='utf-8') as fr:
 			answers = json.load(fr, object_hook=Answer.dict2answer)
 		return answers
+
+	def get_ans_by_id(answers, _id):
+		for answer in answers:
+			if answer.id == _id:
+				return answer
+		return None

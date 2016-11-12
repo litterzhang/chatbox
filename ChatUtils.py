@@ -9,4 +9,6 @@ def sim_calc(words_s, words_d):
 	for word in words_s:
 		if word in words_d:
 			cnt_same += 1
-	return cnt_same/(len(words_s)+len(words_d)-cnt_same)
+	word_same = cnt_same/(len(words_s)+len(words_d)-cnt_same)
+
+	return word_same

@@ -28,3 +28,10 @@ class Ans2Que(object):
 		with open(fp, 'r', encoding='utf-8') as fr:
 			ans2ques = json.load(fr, object_hook=Ans2Que.dict2ansque)
 		return ans2ques
+
+	def get_ans_by_que(ans2ques, que_id):
+		for ans2que in ans2ques:
+			if ans2que.que_id == que_id:
+				return ans2que
+
+		return None

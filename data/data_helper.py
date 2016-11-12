@@ -35,7 +35,14 @@ def ParseAnswer(fp):
 				'words' : bmseg.seg(line_s[4])
 			}
 
-			if ans not in answers:
+			index = -1
+			for i in range(0, len(answers)):
+				if ans['content'] == answers[i]['content']:
+					index = i
+					break
+			if index != -1:
+				answers[index] = ans
+			else:
 				answers.append(ans)
 	if answers:
 		with open(ANSWER, 'w', encoding='utf-8') as fw:
@@ -57,8 +64,16 @@ def ParseQuestion(fp):
 				'words' : bmseg.seg(line_s[2])
 			}
 
-			if que not in questions:
+			index = -1
+			for i in range(0, len(questions)):
+				if que['content'] == questions[i]['content']:
+					index = i
+					break
+			if index != -1:
+				questions[index] = que
+			else:
 				questions.append(que)
+
 	if questions:
 		with open(QUESTION, 'w', encoding='utf-8') as fw:
 			fw.write(json.dumps(questions, ensure_ascii=False))
@@ -77,7 +92,15 @@ def ParseAns2Que(fp):
 				'ans_ids' : line_s[1:],
 			}
 
-			if ans2que not in ans2ques:
+			index = -1
+			for i in range(0, len(ans2ques)):
+				if ans2que['que_id'] == ans2ques[i]['que_id']:
+					index = i
+					break
+			if index != -1:
+				ans2ques[index]['ans_ids'].extend(ans2que['ans_ids'])
+				ans2ques[index]['ans_ids'] = list(set(ans2ques[index]['ans_ids']))
+			else:
 				ans2ques.append(ans2que)
 	if ans2ques:
 		with open(ANS2OQUE, 'w', encoding='utf-8') as fw:

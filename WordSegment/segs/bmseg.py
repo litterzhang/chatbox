@@ -29,7 +29,6 @@ def seg(sen_str, dict_load=None, word_max=5):
 	words = list()
 	sen_proc_len = 0
 
-	print(sen_sub_strs)
 	# 对每个子句分词
 	for sen_sub_str in sen_sub_strs:
 		words_mm = mmseg(sen_sub_str, dict_load=dict_load, word_max=word_max)
