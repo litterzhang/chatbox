@@ -64,8 +64,8 @@ def blur_ans():
 # 搜索匹配的答案
 def search_ans(anss, times=-1, ans_seed=-1, ans_type=-1):
 	# 第一次回答问题，尝试打乱数组，达到随机回答的目的
-	if times==0:
-		random.shuffle(anss)
+	# if times==0:
+	random.shuffle(anss)
 	anss = sorted(anss, key=lambda x: x.deg)
 
 	ans_res = default_ans
