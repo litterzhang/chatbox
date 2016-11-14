@@ -27,7 +27,7 @@ class Question(object):
 		}
 
 	def dict2questiuon(dic):
-		return Question(dic['id'], dic['type'], dic['content'], _words=dic['words'])
+		return Question(dic['id'], int(dic['type']), dic['content'], _words=dic['words'])
 
 	def load(fp):
 		questions = list()

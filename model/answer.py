@@ -32,8 +32,18 @@ class Answer(object):
 			'words' : answer.words
 		}
 
+	def toString(self):
+		return {
+			'id' : self.id,
+			'type' : self.type,
+			'seed' : self.seed,
+			'deg' : self.deg,
+			'content' : self.content,
+			'words' : self.words
+		}
+
 	def dict2answer(dic):
-		return Answer(dic['id'], dic['type'], dic['seed'], dic['deg'], dic['content'], _words=dic['words'])
+		return Answer(dic['id'], int(dic['type']), int(dic['seed']), int(dic['deg']), dic['content'], _words=dic['words'])
 
 	def load(fp):
 		answers = list()

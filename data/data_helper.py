@@ -37,7 +37,7 @@ def ParseAnswer(fp):
 
 			index = -1
 			for i in range(0, len(answers)):
-				if ans['content'] == answers[i]['content']:
+				if ans['content'] == answers[i]['content'] and ans['id'] == answers[i]['id']:
 					index = i
 					break
 			if index != -1:
@@ -66,7 +66,7 @@ def ParseQuestion(fp):
 
 			index = -1
 			for i in range(0, len(questions)):
-				if que['content'] == questions[i]['content']:
+				if que['content'] == questions[i]['content'] and que['id'] == questions[i]['id']:
 					index = i
 					break
 			if index != -1:
