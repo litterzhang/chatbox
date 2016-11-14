@@ -31,7 +31,7 @@ def ParseAnswer(fp):
 				'type' : line_s[1],
 				'seed' : line_s[2],
 				'deg' : line_s[3],
-				'content' : line_s[4:],
+				'content' : ' '.join(line_s[4:]),
 				'words' : bmseg.seg(' '.join(line_s[4:]))
 			}
 
@@ -60,7 +60,7 @@ def ParseQuestion(fp):
 			que = {
 				'id' : line_s[0],
 				'type' : line_s[1],
-				'content' : line_s[2:],
+				'content' : ' '.join(line_s[2:]),
 				'words' : bmseg.seg(' '.join(line_s[2:]))
 			}
 
