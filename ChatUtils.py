@@ -68,26 +68,44 @@ def search_ans(anss, times=-1, ans_seed=-1, ans_type=-1):
 	random.shuffle(anss)
 	anss = sorted(anss, key=lambda x: x['ans'].deg)
 
-	ans_res = default_ans
-	for _ans in anss:
-		ans = _ans['ans']
+	# 修正times
+	deg_max = max([x['ans'].deg for x in anss])
+	if times > deg_max:
+		times = deg_max
+	if times < 0:
+		times = 0
+
+	# 找到所有符合条件的回答
+	anss_res = list()
+	for ans in anss:
 		if ans_seed==-1 and ans_type==-1:
-			ans_res = ans
-			if ans.deg>=times:
-				break
+			if ans['ans'].deg==times:
+				anss_res.append(ans)
 		elif ans_seed==-1:
-			if ans.type==ans_type:
-				ans_res = ans
-				if ans.deg>=times:
-					break
+			if ans['ans'].type==ans_type:
+				if ans['ans'].deg==times:
+					anss_res.append(ans)
 		elif ans_type==-1:
-			if ans.seed==ans_seed:
-				ans_res = ans
-				if ans.deg>=times:
-					break
+			if ans['ans'].seed==ans_seed:
+				if ans['ans'].deg==times:
+					anss_res.append(ans)
 		else:
-			if ans.type==ans_type and ans.seed==ans_seed:
-				ans_res = ans
-				if ans.deg>=times:
-					break
-	return ans_res
+			if ans['ans'].type==ans_type and ans['ans'].seed==ans_seed:
+				if ans['ans'].deg==times:
+					anss_res.append(ans)
+	if not anss_res:
+		return default_ans()
+
+	# 在符合条件的回答中进行概率随机
+	pro_base = 10
+	pro_key = [x['score'] for x in anss_res]
+	pro_key = [x + pro_base if x > 0 else pro_base for x in pro_key]
+
+	pro_ran = random.random()*sum(pro_key)
+	pro_cnt = 0
+	for i in range(len(pro_key)):
+		if pro_ran>=pro_cnt and pro_ran<pro_cnt+pro_key[i]:
+			return anss_res[i]['ans'], anss_res[i]['score']
+		pro_cnt += pro_key[i]
+
+	return ans_res[0]['ans'], anss_res[0]['score']

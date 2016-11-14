@@ -12,7 +12,9 @@ import ChatUtils
 def best_ans(que_str, coms):
 	que, sim, anss = chatdb.get_answer(que_str)
 
-	ans = ChatUtils.default_ans
+	ans = ChatUtils.default_ans()
+	score = 0
+	
 	if sim < 0.2:
 		ans = ChatUtils.blur_ans()
 	else:
@@ -31,11 +33,11 @@ def best_ans(que_str, coms):
 			if last_ans:
 				ans_seed = last_ans.seed
 				ans_type = last_ans.type
-			ans = ChatUtils.search_ans(anss, times=times, ans_seed=ans_seed, ans_type=ans_type)
+			ans, score = ChatUtils.search_ans(anss, times=times, ans_seed=ans_seed, ans_type=ans_type)
 		elif que.type==1:
-			ans = ChatUtils.search_ans(anss, times=times)
+			ans, score = ChatUtils.search_ans(anss, times=times)
 		else:
-			ans = ChatUtils.search_ans(anss, times=times)		
+			ans, score = ChatUtils.search_ans(anss, times=times)		
 
 	# 记录本次回答
 	coms.append({
@@ -45,23 +47,26 @@ def best_ans(que_str, coms):
 		'ans' : ans
 	})
 
-	return ans
+	return ans, score
 
-# 聊天从这里开始
+# 聊天从这里开始————训练模式
 def chat():
 	coms = list()
 	# 这里进行打招呼，暂时省略
+	man_name = input('What\'s your name? ')
+	chatdb.init_db(man_name)
 
 	# 开始问答
 	while True:
-		que_str = input('Mr. Zhang: ')
+		que_str = input('--------------------\nMr. %s: ' % man_name)
 		
 		if que_str=='end':
 			break
 
-		ans = best_ans(que_str, coms)
+		ans, score = best_ans(que_str, coms)
 
 		print('Mr. Bot: %s' % ans.content)
+		print('Answer type : %s\nAnswer seed : %s\nAnswer deg : %s\nAnswer score : %s\n--------------------\n' % (ans.type, ans.seed, ans.deg, score))
 
 if __name__=='__main__':
 	chat()

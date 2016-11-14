@@ -14,13 +14,21 @@ from WordSegment.segs import bmseg
 
 import ChatUtils
 
-ANSWER = os.path.join(os.path.dirname(__file__), 'data/answer.json')
-QUESTION = os.path.join(os.path.dirname(__file__), 'data/question.json')
-ANS2QUE = os.path.join(os.path.dirname(__file__), 'data/ans2que.json')
+answers = list()
+questions = list()
+ans2ques = list()
 
-answers = Answer.load(ANSWER)
-questions = Question.load(QUESTION)
-ans2ques = Ans2Que.load(ANS2QUE)
+def init_db(key):
+	ANSWER = os.path.join(os.path.dirname(__file__), 'data/answer_%s.json' % key)
+	QUESTION = os.path.join(os.path.dirname(__file__), 'data/question_%s.json' % key)
+	ANS2QUE = os.path.join(os.path.dirname(__file__), 'data/ans2que_%s.json' % key)
+
+	if os.path.exists(ANSWER):
+		answers = Answer.load(ANSWER)
+	if os.path.exists(QUESTION):
+		questions = Question.load(QUESTION)
+	if os.path.exists(ANS2QUE):
+		ans2ques = Ans2Que.load(ANS2QUE)
 
 def match_question(que_str):
 	sims = list()
@@ -30,6 +38,9 @@ def match_question(que_str):
 
 	for que in questions:
 		sims.append(ChatUtils.sim_calc(que_words, que.words))
+
+	if not sims:
+		return None, 0
 
 	sim_max = max(sims)
 	que_mat = questions[sims.index(sim_max)]
@@ -48,6 +59,8 @@ def get_ans_by_que(que):
 
 def get_answer(que_str):
 	que, sim = match_question(que_str)
+	if not que:
+		return None, 0, list()
 	anss = get_ans_by_que(que)
 	return que, sim, anss
 	 
