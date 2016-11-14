@@ -41,9 +41,9 @@ def get_ans_by_que(que):
 	anss = list()
 	if ans2que:
 		for ans_id in ans2que.ans_ids:
-			ans = Answer.get_ans_by_id(answers, ans_id)
+			ans = Answer.get_ans_by_id(answers, ans_id['id'])
 			if ans:
-				anss.append(ans)
+				anss.append({'ans' : ans, 'score' : ans_id['score']})
 	return anss
 
 def get_answer(que_str):

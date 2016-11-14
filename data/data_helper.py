@@ -87,10 +87,18 @@ def ParseAns2Que(fp):
 	with open(fp, 'r', encoding='utf-8') as fr:
 		for line in fr:
 			line_s = line.strip().split()
-			ans2que = {
-				'que_id' : line_s[0],
-				'ans_ids' : line_s[1:],
-			}
+			if line_s[1]=='l':
+				ans2que = {
+					'que_id' : line_s[0],
+					'ans_ids' : [{'id' : x, 'score' : 10} for x in line_s[2:]],
+				}
+			elif line_s[1]=='e':
+				ans2que = {
+					'que_id' : line_s[0],
+					'ans_ids' : [{'id' : line_s[2], 'score' : int(line_s[3])}],
+				}
+			else:
+				pass
 
 			index = -1
 			for i in range(0, len(ans2ques)):
@@ -98,8 +106,14 @@ def ParseAns2Que(fp):
 					index = i
 					break
 			if index != -1:
-				ans2ques[index]['ans_ids'].extend(ans2que['ans_ids'])
-				ans2ques[index]['ans_ids'] = list(set(ans2ques[index]['ans_ids']))
+				for ans in ans2que['ans_ids']:
+					in_anss = False
+					for _ans in ans2ques[index]['ans_ids']:
+						if _ans['id'] == ans['id']:
+							in_anss = True
+							break
+					if not in_anss:
+						ans2ques[index]['ans_ids'].append(ans)
 			else:
 				ans2ques.append(ans2que)
 	if ans2ques:

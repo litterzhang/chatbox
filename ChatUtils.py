@@ -66,10 +66,11 @@ def search_ans(anss, times=-1, ans_seed=-1, ans_type=-1):
 	# 第一次回答问题，尝试打乱数组，达到随机回答的目的
 	# if times==0:
 	random.shuffle(anss)
-	anss = sorted(anss, key=lambda x: x.deg)
+	anss = sorted(anss, key=lambda x: x['ans'].deg)
 
 	ans_res = default_ans
-	for ans in anss:
+	for _ans in anss:
+		ans = _ans['ans']
 		if ans_seed==-1 and ans_type==-1:
 			ans_res = ans
 			if ans.deg>=times:

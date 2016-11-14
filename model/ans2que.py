@@ -26,7 +26,9 @@ class Ans2Que(object):
 	def load(fp):
 		ans2ques = list()
 		with open(fp, 'r', encoding='utf-8') as fr:
-			ans2ques = json.load(fr, object_hook=Ans2Que.dict2ansque)
+			ans2ques_json = json.load(fr)
+			for ans2que_json in ans2ques_json:
+				ans2ques.append(Ans2Que.dict2ansque(ans2que_json))
 		return ans2ques
 
 	def get_ans_by_que(ans2ques, que_id):
