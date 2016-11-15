@@ -41,7 +41,7 @@ __blur_anss = [
 
 # 默认回答
 def default_ans():
-	ans = Answer(-1, 0, 0, 0, '欢迎！小伙子们在火炉旁挤挤，留个位子出来~')
+	ans = Answer(-1, -1, -1, -1, '欢迎！小伙子们在火炉旁挤挤，留个位子出来~')
 	return ans
 
 # 计算相似度
@@ -63,6 +63,8 @@ def blur_ans():
 
 # 搜索匹配的答案
 def search_ans(anss, times=-1, ans_seed=-1, ans_type=-1):
+	if not anss:
+		return default_ans(), 0
 	# 第一次回答问题，尝试打乱数组，达到随机回答的目的
 	# if times==0:
 	random.shuffle(anss)
@@ -82,19 +84,19 @@ def search_ans(anss, times=-1, ans_seed=-1, ans_type=-1):
 			if ans['ans'].deg==times:
 				anss_res.append(ans)
 		elif ans_seed==-1:
-			if ans['ans'].type==ans_type:
+			if ans['ans'].type==ans_type or ans['ans'].type==2:
 				if ans['ans'].deg==times:
 					anss_res.append(ans)
 		elif ans_type==-1:
-			if ans['ans'].seed==ans_seed:
+			if ans['ans'].seed==ans_seed or ans['ans'].seed==-1:
 				if ans['ans'].deg==times:
 					anss_res.append(ans)
 		else:
-			if ans['ans'].type==ans_type and ans['ans'].seed==ans_seed:
+			if (ans['ans'].type==ans_type and ans['ans'].seed==ans_seed) or (ans['ans'].type==2 and ans['ans'].seed==-1):
 				if ans['ans'].deg==times:
 					anss_res.append(ans)
 	if not anss_res:
-		return default_ans()
+		return default_ans(), 0
 
 	# 在符合条件的回答中进行概率随机
 	pro_base = 10

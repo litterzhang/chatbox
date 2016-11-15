@@ -51,6 +51,11 @@ class Answer(object):
 			answers = json.load(fr, object_hook=Answer.dict2answer)
 		return answers
 
+	def dump(answers, fp):
+		with open(fp, 'w', encoding='utf-8') as fw:
+			answers_json = json.dumps(answers, ensure_ascii=False, default=Answer.answer2dict)
+			fw.write(answers_json)
+
 	def get_ans_by_id(answers, _id):
 		for answer in answers:
 			if answer.id == _id:

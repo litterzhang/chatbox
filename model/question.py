@@ -34,3 +34,16 @@ class Question(object):
 		with open(fp, 'r', encoding='utf-8') as fr:
 			questions = json.load(fr, object_hook=Question.dict2questiuon)
 		return questions
+
+	def dump(questions, fp):
+		with open(fp, 'w', encoding='utf-8') as fw:
+			questions_json = json.dumps(questions, ensure_ascii=False, default=Question.question2dict)
+			fw.write(questions_json)
+
+	def toString(self):
+		return {
+			'id' : self.id,
+			'type' : self.type,
+			'content' : self.content,
+			'words' : self.words
+		}

@@ -31,9 +31,19 @@ class Ans2Que(object):
 				ans2ques.append(Ans2Que.dict2ansque(ans2que_json))
 		return ans2ques
 
+	def dump(ans2ques, fp):
+		with open(fp, 'w', encoding='utf-8') as fw:
+			ans2ques_json = json.dumps(ans2ques, ensure_ascii=False, default=Ans2Que.ansque2dict)
+			fw.write(ans2ques_json)
+
 	def get_ans_by_que(ans2ques, que_id):
 		for ans2que in ans2ques:
 			if ans2que.que_id == que_id:
 				return ans2que
-
 		return None
+
+	def toString(self):
+		return {
+			'que_id' : self.que_id,
+			'ans_ids' : self.ans_ids
+		}
