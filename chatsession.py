@@ -112,7 +112,7 @@ def chat():
 		# 创建新问题
 		if sim < sim_new:
 			# 输入新问题类型
-			que_new_type = input_int(input_tip='\n这是一个新问题输入问题类型新问题类型: ', default=2)
+			que_new_type = input_int(input_tip='\n这是一个新问题, 输入问题类型: ', default=2)
 			que_new = chatdb.que_new(que_str, que_new_type)
 			
 			# 匹配旧问题答案
@@ -125,7 +125,7 @@ def chat():
 
 		#这里进行答案匹配
 		ans, score = best_ans(que_str, que, sim, anss, coms)
-		print('Mr. Bot: %s' % ans.content)
+		print('Mr. Bot: %s\n' % ans.content)
 		print('Answer type : %s\nAnswer seed : %s\nAnswer deg : %s\nAnswer score : %s\n' % (ans.type, ans.seed, ans.deg, score))
 		
 		# 默认答案，要求新增1或n个答案

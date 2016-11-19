@@ -5,6 +5,7 @@
 __author__='litterzhang'
 
 import os
+import copy
 
 from model.answer import Answer
 from model.question import Question
@@ -37,14 +38,14 @@ def init_db(key):
 		with open(IDS, 'r', encoding='utf-8') as fr:
 			ids = [int(x) for x in fr.readline().strip().split()]
 	
-	print('\n----------Debug---------\n')
-	for question in questions:
-		print('question : %s ' % question.toString())
-	for answer in answers:
-		print('answer : %s ' % answer.toString())
-	for ans2que in ans2ques:
-		print('ans2que : %s ' % ans2que.toString())
-	print('\n----------Debug---------\n')
+	# print('\n----------Debug---------\n')
+	# for question in questions:
+	# 	print('question : %s ' % question.toString())
+	# for answer in answers:
+	# 	print('answer : %s ' % answer.toString())
+	# for ans2que in ans2ques:
+	# 	print('ans2que : %s ' % ans2que.toString())
+	# print('\n----------Debug---------\n')
 
 def save_db(key):
 	global answers, questions, ans2ques, ids
@@ -54,14 +55,14 @@ def save_db(key):
 	ANS2QUE = os.path.join(os.path.dirname(__file__), 'data/ans2que_%s.json' % key)
 	IDS = os.path.join(os.path.dirname(__file__), 'data/ids_%s' % key)
 
-	print('\n----------Debug---------\n')
-	for question in questions:
-		print('question : %s ' % question.toString())
-	for answer in answers:
-		print('answer : %s ' % answer.toString())
-	for ans2que in ans2ques:
-		print('ans2que : %s ' % ans2que.toString())
-	print('\n----------Debug---------\n')
+	# print('\n----------Debug---------\n')
+	# for question in questions:
+	# 	print('question : %s ' % question.toString())
+	# for answer in answers:
+	# 	print('answer : %s ' % answer.toString())
+	# for ans2que in ans2ques:
+	# 	print('ans2que : %s ' % ans2que.toString())
+	# print('\n----------Debug---------\n')
 
 	Answer.dump(answers, ANSWER)
 	Question.dump(questions, QUESTION)
@@ -72,6 +73,15 @@ def save_db(key):
 
 def match_question(que_str):
 	global answers, questions, ans2ques, ids
+
+	# print('\n----------Debug---------\n')
+	# for question in questions:
+	# 	print('question : %s ' % question.toString())
+	# for answer in answers:
+	# 	print('answer : %s ' % answer.toString())
+	# for ans2que in ans2ques:
+	# 	print('ans2que : %s ' % ans2que.toString())
+	# print('\n----------Debug---------\n')
 
 	sims = list()
 	
@@ -108,6 +118,8 @@ def get_answer(que_str):
 	if not que:
 		return None, 0, list()
 	anss = get_ans_by_que(que)
+
+	# print('相似度: %s\n' % sim)
 	return que, sim, anss
 
 def que_new_id():
@@ -130,14 +142,14 @@ def que_new(que_str, que_type=2):
 
 	questions.append(que)
 
-	print('\n----------Debug---------\n')
-	for question in questions:
-		print('question : %s ' % question.toString())
-	for answer in answers:
-		print('answer : %s ' % answer.toString())
-	for ans2que in ans2ques:
-		print('ans2que : %s ' % ans2que.toString())
-	print('\n----------Debug---------\n')
+	# print('\n----------Debug---------\n')
+	# for question in questions:
+	# 	print('question : %s ' % question.toString())
+	# for answer in answers:
+	# 	print('answer : %s ' % answer.toString())
+	# for ans2que in ans2ques:
+	# 	print('ans2que : %s ' % ans2que.toString())
+	# print('\n----------Debug---------\n')
 
 	return que
 
@@ -164,30 +176,32 @@ def ans_new_and_match_que(que_id, ans_str, ans_type=2, ans_seed=-1, ans_deg=0, s
 	if not match:
 		ans2ques.append(Ans2Que(que_id, [{'id' : ans.id, 'score' : score}, ]))
 
-	print('\n----------Debug---------\n')
-	for question in questions:
-		print('question : %s ' % question.toString())
-	for answer in answers:
-		print('answer : %s ' % answer.toString())
-	for ans2que in ans2ques:
-		print('ans2que : %s ' % ans2que.toString())
-	print('\n----------Debug---------\n')
+	# print('\n----------Debug---------\n')
+	# for question in questions:
+	# 	print('question : %s ' % question.toString())
+	# for answer in answers:
+	# 	print('answer : %s ' % answer.toString())
+	# for ans2que in ans2ques:
+	# 	print('ans2que : %s ' % ans2que.toString())
+	# print('\n----------Debug---------\n')
 
 def match_old_anss(que_new_id, que_old_id):
 	global answers, questions, ans2ques, ids
 
 	ans2que = Ans2Que.get_ans_by_que(ans2ques, que_old_id)
-	ans2que_new = Ans2Que(que_new_id, ans2que.ans_ids)
-	ans2ques.append(ans2que_new)
 
-	print('\n----------Debug---------\n')
-	for question in questions:
-		print('question : %s ' % question.toString())
-	for answer in answers:
-		print('answer : %s ' % answer.toString())
-	for ans2que in ans2ques:
-		print('ans2que : %s ' % ans2que.toString())
-	print('\n----------Debug---------\n')
+	if ans2que:
+		ans2que_new = Ans2Que(que_new_id, copy.deepcopy(ans2que.ans_ids))
+		ans2ques.append(ans2que_new)
+
+	# print('\n----------Debug---------\n')
+	# for question in questions:
+	# 	print('question : %s ' % question.toString())
+	# for answer in answers:
+	# 	print('answer : %s ' % answer.toString())
+	# for ans2que in ans2ques:
+	# 	print('ans2que : %s ' % ans2que.toString())
+	# print('\n----------Debug---------\n')
 
 def change_score(que_id, ans_id, score):
 	global answers, questions, ans2ques, ids
@@ -195,20 +209,21 @@ def change_score(que_id, ans_id, score):
 	if score!=0:
 		for ans2que in ans2ques:
 			if ans2que.que_id==que_id:
+				print(ans2que.toString())
 				for ans_score in ans2que.ans_ids:
 					if ans_score['id']==ans_id:
 						ans_score['score'] += score
 						break
 				break
 
-	print('\n----------Debug---------\n')
-	for question in questions:
-		print('question : %s ' % question.toString())
-	for answer in answers:
-		print('answer : %s ' % answer.toString())
-	for ans2que in ans2ques:
-		print('ans2que : %s ' % ans2que.toString())
-	print('\n----------Debug---------\n')
+	# print('\n----------Debug---------\n')
+	# for question in questions:
+	# 	print('question : %s ' % question.toString())
+	# for answer in answers:
+	# 	print('answer : %s ' % answer.toString())
+	# for ans2que in ans2ques:
+	# 	print('ans2que : %s ' % ans2que.toString())
+	# print('\n----------Debug---------\n')
 
 if __name__=='__main__':
 	que, sim = match_question('吃了吗??')

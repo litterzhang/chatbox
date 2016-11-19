@@ -46,6 +46,9 @@ def default_ans():
 
 # 计算相似度
 def sim_calc(words_s, words_d):
+	words_d = [list(x) for x in words_d]
+	words_d = list(filter(lambda x: x[2]!='bd', words_d))
+	
 	cnt_same = 0
 	for word in words_s:
 		if word in words_d:
