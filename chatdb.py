@@ -38,14 +38,14 @@ def init_db(key):
 		with open(IDS, 'r', encoding='utf-8') as fr:
 			ids = [int(x) for x in fr.readline().strip().split()]
 	
-	# print('\n----------Debug---------\n')
-	# for question in questions:
-	# 	print('question : %s ' % question.toString())
-	# for answer in answers:
-	# 	print('answer : %s ' % answer.toString())
-	# for ans2que in ans2ques:
-	# 	print('ans2que : %s ' % ans2que.toString())
-	# print('\n----------Debug---------\n')
+	print('\n----------Debug---------\n')
+	for question in questions:
+		print('question : %s ' % question.toString())
+	for answer in answers:
+		print('answer : %s ' % answer.toString())
+	for ans2que in ans2ques:
+		print('ans2que : %s ' % ans2que.toString())
+	print('\n----------Debug---------\n')
 
 def save_db(key):
 	global answers, questions, ans2ques, ids

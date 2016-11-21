@@ -1,0 +1,14 @@
+<html>
+	<head>
+		<title>FriendFeed - {{ _("Sign in") }}</title>
+	</head>
+	<body>
+		<form action="{{ request.path }}" method="POST">
+			<div>{{ _("Name") }} <input type="text" name="name"/></div>
+			<div>{{ _("Sim New") }} <input type="text" name="sim_new"/></div>
+			<div>{{ _("Sim Old") }} <input type="text" name="sim_old"/></div>
+			<div><input type="submit" value="{{ _("Start") }}"/></div>
+			<!-- {% module xsrf_form_html() %} -->
+		</form>
+	</body>
+</html>
