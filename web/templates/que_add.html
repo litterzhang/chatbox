@@ -1,31 +1,52 @@
+<!DOCTYPE html>
 <html>
 	<head>
-		<title>{{ _('Index') }}</title>
+		<meta charset="utf-8">
+		<title>{{ _("ChatBox") }}</title>
+
+		<link rel="stylesheet" type="text/css" href="../static/index.css">
+		<link rel="stylesheet" type="text/css" href="../static/chat.css">
 	</head>
 	<body>
-		<p>{{ chat.name }}</p>
-		<p>{{ chat.sim_new }}</p>
-		<p>{{ chat.sim_old }}</p>
-		<a href="/logout">{{ _('Logout') }}</a>
-
-		<div id="chatbox">
-			{% for com in chat.coms %}
-				<li>{{ escape(com['que_str']) }}</li>
-				<li>{{ escape(com['ans']['content']) }}</li>
-			{% end %}
+		<div class="header">
 		</div>
-			
-		<div id="que_type">
-			<form action="/que_add" method="POST">
-				<input type="hidden" name="que_content" value="{{ que_content }}">
-				
-				{{ _("Question Type") }}
-				<input type="number" name="que_type" value="2" min="0" max="2" />
-				<br/>
+		<div role="main">
+			<div class="container">
+				<div class="chatbox">
+					<div class="chatbox-msgbox">
+						<ul>
+							{% for com in chat.coms %}
+								<li class="chat_right"><span>{{ escape(com['que_str']) }}</span></li>
+								<li class="chat_left"><span>{{ escape(com['ans']['content']) }}</span></li>
+							{% end %}
+						</ul>
+					</div>
 
-				<input type="submit" value="{{ _("确定") }}"/>
-				<!-- {% module xsrf_form_html() %} -->
-			</form>
+					<div class="chatbox-quebox">
+						<form action="/que_add" method="POST">
+							<input type="hidden" name="que_content" value="{{ que_content }}">
+			
+							<input type="number" name="que_type" value="2" min="0" max="2" class="input-block form-control que_input" />
+							<input type="submit" value="{{ _("确定") }}" class="btn btn-primary btn-block que_submit" />
+							<!-- {% module xsrf_form_html() %} -->
+						</form>
+					</div>
+				</div>
+
+				<div class="dashboards">
+					<div class="board">
+						<h3>Chatter Message</h3>
+						<div class="board-inner">
+							<ul>
+								<li>Name : {{ chat.name }}</li>
+								<li>Sim New : {{ chat.sim_new }}</li>
+								<li>Sim Old : {{ chat.sim_old }}</li>
+								<li class="logout"><a href="/logout" >{{ _('结束训练') }}</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</body>
 </html>

@@ -1,0 +1,160 @@
+body {
+	background-color: #f9f9f9;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+	font-size: 14px;
+	line-height: 1.5;
+	color: #333;
+	margin: 0;
+	word-wrap: break-word;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+form {
+	display: block;
+	margin-top: 0;
+}
+
+div {
+	display: block;
+}
+
+h1 {
+	display: block;
+	font-size: 2em;
+	-webkit-margin-before: 0.67em;
+	-webkit-margin-after: 0.67em;
+	-webkit-margin-start: 0px;
+	-webkit-margin-end: 0px;
+	font-weight: bold;
+	margin-top: 0;
+	margin-bottom: 0;
+	margin: 0.67em 0;
+}
+
+h3 {
+	display: block;
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+label {
+	cursor: default;
+	font-weight: 600;
+}
+
+input, textarea {
+	-webkit-font-feature-settings: "liga" 0;
+	font-feature-settings: "liga" 0;
+}
+
+input, select, textarea, button {
+	font-family: inherit;
+	font-size: inherit;
+	line-height: inherit;
+}
+
+button, input {
+	overflow: visible;
+}
+
+button, input, select, textarea {
+	font: inherit;
+	margin: 0;
+}
+
+ul, menu, dir {
+    display: block;
+    list-style-type: disc;
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    -webkit-padding-start: 40px;
+}
+
+li {
+    display: list-item;
+    text-align: -webkit-match-parent;
+}
+
+a {
+	color: #4078c0;
+    text-decoration: none;
+}
+
+.header {
+	padding-top: 10px;
+	padding-bottom: 10px;
+	background-color: #f5f5f5;
+	border-bottom: 1px solid #e5e5e5;
+	background-color: transparent;
+	border-bottom: 0;
+}
+
+.input-block {
+	display: block;
+	width: 100%;
+}
+
+.form-control, .form-select {
+	min-height: 34px;
+	padding: 6px 8px;
+	font-size: 14px;
+	line-height: 20px;
+	color: #333;
+	vertical-align: middle;
+	background-color: #fff;
+	background-repeat: no-repeat;
+	background-position: right 8px center;
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	outline: none;
+	box-shadow: inset 0 1px 2px rgba(0,0,0,0.075);
+}
+
+.btn {
+	position: relative;
+	display: inline-block;
+	padding: 6px 12px;
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 20px;
+	color: #333;
+	white-space: nowrap;
+	vertical-align: middle;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	background-color: #eee;
+	background-image: -webkit-linear-gradient(#fcfcfc, #eee);
+	background-image: linear-gradient(#fcfcfc, #eee);
+	border: 1px solid #d5d5d5;
+	border-radius: 3px;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+}
+
+.btn-primary {
+	color: #fff;
+	text-shadow: 0 -1px 0 rgba(0,0,0,0.15);
+	background-color: #6cc644;
+	background-image: -webkit-linear-gradient(#91dd70, #55ae2e);
+	background-image: linear-gradient(#91dd70, #55ae2e);
+	border: 1px solid #5aad35;
+}
+
+.btn-block {
+	display: block;
+	width: 100%;
+	text-align: center;
+}

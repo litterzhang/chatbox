@@ -123,7 +123,10 @@ class QuestionAskHandler(BaseHandler):
 				ans, score = self.chat.chat_ctl_answer(que, sim, anss)
 				self.chat.coms_add_ans(ans, score)
 
-				self.render('ans_add.html', chat=self.chat, que_id=que['id'])
+				if ans['id'] > 0:
+					self.render('ans_score.html', chat=self.chat, que_id=que['id'], ans=ans, score=score)
+				else:
+					self.render('ans_add.html', chat=self.chat, que_id=que['id'])
 		else:
 			self.redirect('/')
 
@@ -132,14 +135,18 @@ class QuestionAddHandler(BaseHandler):
 	def post(self):
 		if self.get_argument('que_content'):
 			que_type = toint(self.get_argument('que_type'), default=2)
+			
 			que, sim, anss = Chat.match_question(self.get_argument('que_content'))
 			que, sim, anss = self.chat.chat_ctl_question(self.get_argument('que_content'), que, sim, anss, que_type)
 			self.chat.coms_add_que(self.get_argument('que_content'), que, sim)
+			
 			ans, score = self.chat.chat_ctl_answer(que, sim, anss)
 			self.chat.coms_add_ans(ans, score)
 
-			print(que)
-			self.render('ans_add.html', chat=self.chat, que_id=que['id'])
+			if ans['id'] > 0:
+				self.render('ans_score.html', chat=self.chat, que_id=que['id'], ans=ans, score=score)
+			else:
+				self.render('ans_add.html', chat=self.chat, que_id=que['id'])
 		else:
 			self.redirect('/')
 
@@ -156,11 +163,22 @@ class AnswerAddHandler(BaseHandler):
 			ans_score = toint(self.get_argument('ans_score'), default=10)
 
 			Chat.add_answer(que_id, ans_content, ans_type, ans_seed, ans_deg, ans_score)
-			print(que_id)
 			
 			self.render('ans_add.html', chat=self.chat, que_id=que_id)
 		else:
 			self.redirect('/')
+
+class AnswerScoreHandler(BaseHandler):
+	@check_login
+	def post(self):
+		if self.get_argument('que_id') and self.get_argument('ans_id'):
+			que_id = toint(self.get_argument('que_id'))
+			ans_id = toint(self.get_argument('ans_id'))
+			ans_score = toint(self.get_argument('ans_score'), default=10)
+
+			Chat.change_score(que_id, ans_id, ans_score)
+			
+		self.render('ans_add.html', chat=self.chat, que_id=que_id)
 
 if __name__=='__main__':
     application = tornado.web.Application([
@@ -170,6 +188,7 @@ if __name__=='__main__':
         (r'/que_ask', QuestionAskHandler),
         (r'/que_add', QuestionAddHandler),
         (r'/ans_add', AnswerAddHandler),
+        (r'/ans_score', AnswerScoreHandler)
     ], **app_settings)
 
     application.listen(3000)

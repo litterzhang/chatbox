@@ -12,7 +12,7 @@ from model.question import Question
 from model.ans2que import Ans2Que
 
 from WordSegment.segs import bmseg
-
+ 
 import ChatUtils
 
 answers = list()

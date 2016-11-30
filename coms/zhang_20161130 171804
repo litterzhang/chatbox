@@ -1,0 +1,1 @@
+[{"score": 11, "ans": {"id": 1, "words": [["你好", 725, "l"]], "seed": -1, "deg": 0, "type": 2, "content": "你好"}, "que": {"content": "你好", "type": 2, "words": [["你好", 725, "l"]], "id": 1}, "que_str": "你好", "que_sim": 1.0}]

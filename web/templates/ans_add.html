@@ -1,45 +1,66 @@
+<!DOCTYPE html>
 <html>
 	<head>
-		<title>{{ _('Index') }}</title>
+		<meta charset="utf-8">
+		<title>{{ _("ChatBox") }}</title>
+
+		<link rel="stylesheet" type="text/css" href="../static/index.css">
+		<link rel="stylesheet" type="text/css" href="../static/chat.css">
 	</head>
 	<body>
-		<p>{{ chat.name }}</p>
-		<p>{{ chat.sim_new }}</p>
-		<p>{{ chat.sim_old }}</p>
-		<a href="/logout">{{ _('Logout') }}</a>
-
-		<div id="chatbox">
-			{% for com in chat.coms %}
-				<li>{{ escape(com['que_str']) }}</li>
-				<li>{{ escape(com['ans']['content']) }}</li>
-			{% end %}
+		<div class="header">
 		</div>
-			
-		<div id="ans_add">
-			<form action="/ans_add" method="POST">
-				<input type="hidden" name="que_id" value="{{ que_id }}">
-				{{ _("Answer Content") }}
-				<input type="text" name="ans_content" placeholder="输入答案的内容" />
-				<br/>
+		<div role="main">
+			<div class="container">
+				<div class="chatbox">
+					<div class="chatbox-msgbox">
+						<ul>
+							{% for com in chat.coms %}
+								<li class="chat_right"><span>{{ escape(com['que_str']) }}</span></li>
+								<li class="chat_left"><span>{{ escape(com['ans']['content']) }}</span></li>
+							{% end %}
+						</ul>
+					</div>
 
-				{{ _("Answer Type") }}
-				<input type="number" name="ans_type" value="2" max="2" min="0" />
-				<br/>
+					<div class="chatbox-quebox">
+						<form action="/que_ask" method="POST">
+							<input type="text" name="que_content" class="input-block form-control que_input" />
+							<input type="submit" value="{{ _("发送") }}" class="btn btn-primary btn-block que_submit" />
+							<!-- {% module xsrf_form_html() %} -->
+						</form>
+					</div>
+				</div>
 
-<!-- 					{{ _("Answer Seed") }}
-				<input type="number" name="ans_seed" value="-1" />
-				<br/> -->
+				<div class="dashboards">
+					<div class="board">
+						<h3>Chatter Message</h3>
+						<div class="board-inner">
+							<ul>
+								<li>Name : {{ chat.name }}</li>
+								<li>Sim New : {{ chat.sim_new }}</li>
+								<li>Sim Old : {{ chat.sim_old }}</li>
+								<li class="logout"><a href="/logout" >{{ _('结束训练') }}</a></li>
+							</ul>
+						</div>
+					</div>
 
-				{{ _("Answer Degree") }}
-				<input type="number" name="ans_deg" value="0" min="0" max="10" />
-				<br/>
-
-				{{ _("Answer Score") }}
-				<input type="number" name="ans_score" value="10" min="-20" max="20" />
-				<br/>
-
-				<input type="submit" value="{{ _("确定") }}"/>
-			</form>
+					<div class="board" id="add_answer">
+						<h3>Add Answer</h3>
+						<div class="board-inner">
+							<form  action="/ans_add" method="POST">
+								<input type="hidden" name="que_id" value="{{ que_id }}">
+								<ul>
+									<li><input type="text" name="ans_content" class="input-block form-control" placeholder="Answer Content"></li>
+									<li><input type="number" name="ans_type" value="2" max="2" min="0" class="input-block form-control" placeholder="Answer Type" /></li>
+									<li><input type="number" name="ans_deg" value="0" max="10" min="0" class="input-block form-control" placeholder="Answer Degree" /></li>
+									<li><input type="number" name="ans_score" value="10" max="20" min="-20" class="input-block form-control" placeholder="Answer Score" /></li>
+									<li class="logout"><input type="submit" value="{{ _("添加") }}" /></li>
+								</ul>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</body>
 </html>

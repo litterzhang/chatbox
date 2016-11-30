@@ -1,1 +1,0 @@
-[{"que": {"type": 2, "id": 1, "content": "你好", "words": [["你好", 725, "l"]]}, "ans": {"deg": -1, "type": -1, "id": -1, "content": "欢迎！小伙子们在火炉旁挤挤，留个位子出来~", "words": [], "seed": -1}, "que_str": "你好", "que_sim": 1.0, "score": 0}]

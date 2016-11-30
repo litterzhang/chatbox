@@ -1,14 +1,38 @@
+<!DOCTYPE html>
 <html>
 	<head>
-		<title>FriendFeed - {{ _("Sign in") }}</title>
+		<meta charset="utf-8">
+		<title>{{ _("ChatBox") }}</title>
+
+		<link rel="stylesheet" type="text/css" href="static/index.css">
+		<link rel="stylesheet" type="text/css" href="static/login.css">
 	</head>
 	<body>
-		<form action="{{ request.path }}" method="POST">
-			<div>{{ _("Name") }} <input type="text" name="name"/></div>
-			<div>{{ _("Sim New") }} <input type="text" name="sim_new"/></div>
-			<div>{{ _("Sim Old") }} <input type="text" name="sim_old"/></div>
-			<div><input type="submit" value="{{ _("Start") }}"/></div>
-			<!-- {% module xsrf_form_html() %} -->
-		</form>
+		<div class="header">
+		</div>
+		<div role="main">
+			<div class="auth-form">
+				<form accept-charset="utf-8" action="{{ request.path }}" method="POST">
+					<div class="auth-form-header">
+						<h1>Sign in to ChatBox</h1>
+					</div>
+
+					<div class="auth-form-body">
+						<label for="auth_name">{{ _("姓名") }}</label>
+						<input type="text" name="name" class="form-control input-block" autofocus="autofocus" tabindex="1" id="auth_name" />
+
+						<label for="sim_new">{{ _("生成新问题阈值") }}</label>
+						<input type="text" name="sim_new" class="form-control input-block" autofocus="autofocus" tabindex="2" id="auth_name" value="0.7" />
+
+						<label for="sim_new">{{ _("同步旧问题阈值") }}</label>
+						<input type="text" name="sim_old" class="form-control input-block" autofocus="autofocus" tabindex="3" id="auth_name" value="0.2" />
+
+						<input type="submit" value="{{ _("开始训练") }}" class="btn btn-primary btn-block" name="commit" tabindex="4" />
+						
+					</div>
+					<!-- {% module xsrf_form_html() %} -->
+				</form>
+			</div>
+		</div>
 	</body>
 </html>

@@ -23,9 +23,11 @@
 					</div>
 
 					<div class="chatbox-quebox">
-						<form action="/que_ask" method="POST">
-							<input type="text" name="que_content" class="input-block form-control que_input" />
-							<input type="submit" value="{{ _("发送") }}" class="btn btn-primary btn-block que_submit" />
+						<form action="/ans_score" method="POST">
+							<input type="hidden" name="que_id" value="{{ que_id }}">
+							<input type="hidden" name="ans_id" value="{{ ans['id'] }}">
+							<input input type="number" name="ans_score" value="0" min="-20" max="20" class="input-block form-control que_input" />
+							<input type="submit" value="{{ _("确定") }}" class="btn btn-primary btn-block que_submit" />
 							<!-- {% module xsrf_form_html() %} -->
 						</form>
 					</div>
@@ -40,6 +42,18 @@
 								<li>Sim New : {{ chat.sim_new }}</li>
 								<li>Sim Old : {{ chat.sim_old }}</li>
 								<li class="logout"><a href="/logout" >{{ _('结束训练') }}</a></li>
+							</ul>
+						</div>
+					</div>
+
+					<div class="board">
+						<h3>Answer Message</h3>
+						<div class="board-inner">
+							<ul>
+								<li>{{ _("Answer Type : ") }} {{ ans['type'] }}</li>
+								<li>{{ _("Answer Seed : ") }} {{ ans['seed'] }}</li>
+								<li>{{ _("Answer Degree : ") }} {{ ans['deg'] }}</li>
+								<li>{{ _("Answer Socre : ") }} {{ score }}</li>
 							</ul>
 						</div>
 					</div>
