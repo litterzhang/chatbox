@@ -142,6 +142,20 @@ body {
 	border-radius: 0 0 3px 0;
 }
 
+.chatbox-tips {
+	display: block;
+    padding: 5px 20px;
+    margin: 0;
+    font-size: 14px;
+    background-color: #eee;
+    border: 1px solid #d8d8d8;
+    border-bottom: 0;
+    line-height: 20px;
+    overflow: overlay;
+    color: #f50000;
+    text-align: center;
+}
+
 .chatbox-msgbox>ul {
 	list-style: none;
     padding-left: 0;
